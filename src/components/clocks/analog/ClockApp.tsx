@@ -1,4 +1,4 @@
-import { ClockHands, ClockNumbers } from "@/utils";
+import { ClockHands, ClockNumbers, ClockHandsCon } from "@/utils";
 export default function ClockApp() {
   return (
     <section
@@ -7,6 +7,7 @@ export default function ClockApp() {
     rounded-[50%] relative flex justify-center items-center"
     >
       <ClockNumbers />
+      {/* <ClockHandsCon /> */}
       <ClockHands />
     </section>
   );

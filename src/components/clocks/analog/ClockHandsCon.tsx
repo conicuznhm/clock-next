@@ -35,19 +35,29 @@ export default function ClockHands() {
   const [hrAngle, setHrAngle] = useState<number>(hr);
   const [minAngle, setMinAngle] = useState<number>(min);
   const [secAngle, setSecAngle] = useState<number>(sec);
+  // const [startTime, setStartTime] = useState<number>(Date.now());
 
   useEffect(() => {
+    //
+    // const calculateSecAngle = () => {
+    //   const elapsedSeconds = (Date.now() - startTime) / 1000;
+    //   return elapsedSeconds;
+    // };
+
     let frameID: number;
     // Need real time use getTime.key instead of const {key} = getTime()
     const updateAngle = () => {
       setHrAngle(getTime().hr);
       setMinAngle(getTime().min);
       setSecAngle(getTime().sec);
+      // setSecAngle(calculateSecAngle());
       frameID = requestAnimationFrame(updateAngle);
     };
+
     frameID = requestAnimationFrame(updateAngle);
+
     return () => cancelAnimationFrame(frameID);
-  }, []);
+  }, [hrAngle, minAngle, secAngle]);
 
   return (
     <>
@@ -68,8 +78,3 @@ export default function ClockHands() {
     </>
   );
 }
-
-//Remainder
-// % in js is remainder not modulo
-// (hr % 12 + 12) % 12 = (hr % 12)
-// (hr % 12 + 12) % 12 to dealing with negative value the result will give like modulo
