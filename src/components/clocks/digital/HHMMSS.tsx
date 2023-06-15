@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { CustomDiv, AnimateDiv } from "@/utils";
 
 export default function HHMMSS() {
   interface Time {
@@ -50,12 +51,12 @@ export default function HHMMSS() {
       <section className="bg-[rgba(0,0,0,0.7)] rounded-[10px]">
         <section className="bg-[rgba(0,0,0,0.9)] text-white m- py-1 w-[180px] text-xl rounded-[10px]">
           <section className="flex justify-center gap-2 px-1">
-            <div className="w-6">{time.hh}</div>
+            <CustomDiv>{time.hh}</CustomDiv>
             <div>:</div>
-            <div className="w-6">{time.mm}</div>
-            <div>:</div>
-            <div className="w-6">{time.ss}</div>
-            <div className="">{time.isPm ? "PM" : "AM"}</div>
+            <CustomDiv>{time.mm}</CustomDiv>
+            <AnimateDiv>:</AnimateDiv>
+            <CustomDiv>{time.ss}</CustomDiv>
+            <CustomDiv>{time.isPm ? "PM" : "AM"}</CustomDiv>
           </section>
         </section>
       </section>

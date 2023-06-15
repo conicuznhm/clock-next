@@ -41,9 +41,8 @@ export default function ClockHands() {
   useEffect(() => {
     let frameID: number;
     const calSecAngle = () => {
-      const elapsedSec = Math.abs((Date.now() - startTime) / 1000) % 60;
-      const angle = ((elapsedSec + offsetSec.current) * 6) % 360;
-      return angle;
+      const elapsedSec = Math.abs((Date.now() - startTime) / 1000);
+      return (elapsedSec + offsetSec.current) * 6;
     };
 
     const updateAngle = () => {
@@ -51,7 +50,6 @@ export default function ClockHands() {
       setMinAngle(getTime().minDeg);
       setSecAngle(calSecAngle());
       frameID = requestAnimationFrame(updateAngle);
-      console.log(calSecAngle());
     };
     frameID = requestAnimationFrame(updateAngle);
     console.log("hi");
@@ -72,10 +70,7 @@ export default function ClockHands() {
       ></span>
       <span
         className={`${handSizes.sec} ${handColors.sec} absolute bottom-44 origin-bottom rounded-full`}
-        style={{
-          transform: `rotate(${secAngle}deg)`,
-          transition: "transform 0.5s linear"
-        }}
+        style={{ transform: `rotate(${secAngle}deg)`, transition: "transform 0.5s linear" }}
         // style={{ transform: `rotate(${secAngle}deg)`, transition: "transform 0.5s ease-in-out" }}
       ></span>
     </>

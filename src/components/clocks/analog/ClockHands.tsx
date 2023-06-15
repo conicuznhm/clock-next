@@ -23,26 +23,27 @@ export default function ClockHands() {
     const sec = date.getSeconds();
 
     // Set angle for hr,min,sec hands
-    const hrAngle = (hr % 12) * 30 + min * 0.5;
-    const minAngle = min * 6;
-    const secAngle = sec * 6;
+    const hrDeg = (hr % 12) * 30 + min * 0.5;
+    const minDeg = min * 6;
+    const secDeg = sec * 6;
 
-    return { hr: hrAngle, min: minAngle, sec: secAngle };
+    return { hrDeg, minDeg, secDeg };
   };
   // clock hand movement (will be make to module next)
 
-  const { hr, min, sec } = getTime();
-  const [hrAngle, setHrAngle] = useState<number>(hr);
-  const [minAngle, setMinAngle] = useState<number>(min);
-  const [secAngle, setSecAngle] = useState<number>(sec);
+  const { hrDeg, minDeg, secDeg } = getTime();
+  const [hrAngle, setHrAngle] = useState<number>(hrDeg);
+  const [minAngle, setMinAngle] = useState<number>(minDeg);
+  const [secAngle, setSecAngle] = useState<number>(secDeg);
 
   useEffect(() => {
     let frameID: number;
-    // Need real time use getTime.key instead of const {key} = getTime()
+
     const updateAngle = () => {
-      setHrAngle(getTime().hr);
-      setMinAngle(getTime().min);
-      setSecAngle(getTime().sec);
+      const { hrDeg, minDeg, secDeg } = getTime();
+      setHrAngle(hrDeg);
+      setMinAngle(minDeg);
+      setSecAngle(secDeg);
       frameID = requestAnimationFrame(updateAngle);
     };
     frameID = requestAnimationFrame(updateAngle);
@@ -62,8 +63,8 @@ export default function ClockHands() {
       ></span>
       <span
         className={`${handSizes.sec} ${handColors.sec} absolute bottom-44 origin-bottom rounded-full`}
-        // style={{ transform: `rotate(${secAngle}deg)`, transition: "transform 0.5s ease-in-out" }}
-        style={{ transform: `rotate(${secAngle}deg)` }}
+        style={{ transform: secAngle === 0 ? "rotate(0.1deg)" : `rotate(${secAngle}deg)` }}
+        // style={{ transform: `rotate(${secAngle}deg)`, transition: "transform 0.5s linear" }}
       ></span>
     </>
   );
@@ -73,3 +74,7 @@ export default function ClockHands() {
 // % in js is remainder not modulo
 // (hr % 12 + 12) % 12 = (hr % 12)
 // (hr % 12 + 12) % 12 to dealing with negative value the result will give like modulo
+
+// console.log(Date.now());
+// console.log(new Date().getTime());
+// console.log(new Date().getSeconds());
