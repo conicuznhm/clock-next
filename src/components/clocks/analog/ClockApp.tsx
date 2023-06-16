@@ -7,8 +7,8 @@ export default function ClockApp() {
     rounded-[50%] relative flex justify-center items-center"
     >
       <ClockNumbers />
-      {/* <ClockHandsCon /> */}
-      <ClockHands />
+      <ClockHandsCon />
+      {/* <ClockHands /> */}
     </section>
   );
 }

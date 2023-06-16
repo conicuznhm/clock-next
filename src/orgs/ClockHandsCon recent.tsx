@@ -2,39 +2,58 @@
 import { useEffect, useRef, useState } from "react";
 import getAngle from "@/utils/getAngle";
 import { hand } from "@/utils";
-import { SecondHandDiv } from "@/utils";
 
 export default function ClockHands() {
   // handSizes and handColors
   // getAngle
 
-  const { hrDeg, minDeg, secDeg } = getAngle();
+  const { hrDeg, minDeg, secDeg, sec } = getAngle();
   const [hrAngle, setHrAngle] = useState<number>(hrDeg);
   const [minAngle, setMinAngle] = useState<number>(minDeg);
+  const [secAngle, setSecAngle] = useState<number>(secDeg);
+  const [startTime, setStartTime] = useState<number>(Date.now());
+  const offsetSec = useRef<number>(sec);
 
   useEffect(() => {
     let frameID: number;
+    const calSecAngle = () => {
+      const elapsedSec = Math.abs((Date.now() - startTime) / 1000) % 60;
+      const angle = ((elapsedSec + offsetSec.current) * 6) % 360;
+      return angle;
+    };
+
     const updateAngle = () => {
       setHrAngle(getAngle().hrDeg);
       setMinAngle(getAngle().minDeg);
+      setSecAngle(calSecAngle());
       frameID = requestAnimationFrame(updateAngle);
+      console.log(calSecAngle());
     };
     frameID = requestAnimationFrame(updateAngle);
+    console.log("hi");
+
     return () => cancelAnimationFrame(frameID);
   }, []);
 
   return (
     <>
-      <div className="h-3 w-3 rounded-full bg-black"></div>
-      <div
-        className={`${hand.handSizes.hr} ${hand.handColors.hr} ${hand.positions.hr}`}
+      <span className="h-3 w-3 rounded-full bg-black"></span>
+      <span
+        className={`${hand.handSizes.hr} ${hand.handColors.hr} absolute bottom-44 origin-bottom rounded-full`}
         style={{ transform: `rotate(${hrAngle}deg)` }}
-      ></div>
-      <div
-        className={`${hand.handSizes.min} ${hand.handColors.min} ${hand.positions.min}`}
+      ></span>
+      <span
+        className={`${hand.handSizes.min} ${hand.handColors.min} absolute bottom-44 origin-bottom rounded-full`}
         style={{ transform: `rotate(${minAngle}deg)` }}
-      ></div>
-      <SecondHandDiv style={{ transform: `rotate(${secDeg}deg)` }}></SecondHandDiv>
+      ></span>
+      <span
+        className={`${hand.handSizes.sec} ${hand.handColors.sec} absolute bottom-44 origin-bottom rounded-full`}
+        style={{
+          transform: `rotate(${secAngle}deg)`,
+          transition: "transform 0.5s linear"
+        }}
+        // style={{ transform: `rotate(${secAngle}deg)`, transition: "transform 0.5s ease-in-out" }}
+      ></span>
     </>
   );
 }

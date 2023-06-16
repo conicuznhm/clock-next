@@ -5,6 +5,11 @@ import dynamic from "next/dynamic";
 import Header from "@/components/layouts/Header";
 export { Header };
 
+// clock config
+//hand config
+import { hand } from "@/clock_config/config";
+export { hand };
+
 // component analog clock
 import ClockApp from "@/components/clocks/analog/ClockApp";
 import ClockNumbers from "@/components/clocks/analog/ClockNumbers";
@@ -30,4 +35,5 @@ export { ClockDigital, HHMMSS };
 //custom component
 import { CustomDiv } from "@/custom_tag/CustomDiv";
 import { AnimateDiv } from "@/custom_tag/CustomDiv";
-export { CustomDiv, AnimateDiv };
+import { SecondHandDiv } from "@/custom_tag/CustomDiv";
+export { CustomDiv, AnimateDiv, SecondHandDiv };

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { CustomDiv, AnimateDiv } from "@/utils";
+import getTime from "@/utils/getTime";
 
 export default function HHMMSS() {
   interface Time {
@@ -10,20 +11,7 @@ export default function HHMMSS() {
     isPm: boolean;
   }
 
-  const getTime = () => {
-    const date: Date = new Date();
-    const hr: number = date.getHours();
-    const hours: string =
-      hr % 12
-        ? (hr % 12).toLocaleString("en-US", { minimumIntegerDigits: 2 })
-        : hr === 12
-        ? "12"
-        : "00";
-    const minutes: string = date.getMinutes().toLocaleString("en-US", { minimumIntegerDigits: 2 });
-    const seconds: string = date.getSeconds().toLocaleString("en-US", { minimumIntegerDigits: 2 });
-    const isPm: boolean = hr >= 12;
-    return { hh: hours, mm: minutes, ss: seconds, isPm };
-  };
+  //getTime
 
   // const [time, setTime] = useState<{ hh: string; mm: string; ss: string }>(getTime());
   const [time, setTime] = useState<Time>(getTime());
@@ -80,3 +68,20 @@ export default function HHMMSS() {
 // % in js is remainder not modulo
 // (hr % 12 + 12) % 12 = (hr % 12)
 // (hr % 12 + 12) % 12 to dealing with negative value the result will give like modulo
+
+// //get time function (to be module)
+// const getTime = () => {
+//   const date: Date = new Date();
+//   const hr: number = date.getHours();
+//   const hours: string =
+//     hr % 12
+//       ? (hr % 12).toLocaleString("en-US", { minimumIntegerDigits: 2 })
+//       : hr === 12
+//       ? "12"
+//       : "00";
+//   const minutes: string = date.getMinutes().toLocaleString("en-US", { minimumIntegerDigits: 2 });
+//   const seconds: string = date.getSeconds().toLocaleString("en-US", { minimumIntegerDigits: 2 });
+//   const isPm: boolean = hr >= 12;
+//   return { hh: hours, mm: minutes, ss: seconds, isPm };
+// };
+// //get time function (to be module)
